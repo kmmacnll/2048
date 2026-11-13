@@ -1,0 +1,29 @@
+name: Run 2048 Expectimax AI
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  simulate-game:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # Prevents runaway jobs if depth is set too high
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute 2048 AI Agent
+        run: python -u play_2048.py
