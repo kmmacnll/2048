@@ -1,0 +1,29 @@
+name: Train 2048 AI (Evolutionary Optimization)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows manual triggers from the Actions tab
+
+jobs:
+  evolution-training:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25 # Allocates enough time for multi-generation simulations
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Training Pipeline
+        run: python -u train_2048.py
